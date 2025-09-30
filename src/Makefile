@@ -11,7 +11,7 @@ CXXLFAGS = -std=c++23 -Wall -g
 TARGET = main
 
 # Source files
-SRCS = main.cpp deck.cpp
+SRCS = main.cpp deck.cpp gameplay.cpp
 
 # Object files (replace .c with .o)
 OBJS = $(SRCS:.cpp=.o)
