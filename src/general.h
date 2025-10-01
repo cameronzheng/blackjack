@@ -7,5 +7,6 @@
 #include <random>
 #include <chrono>
 
-#include "gameplay.h"
+#include "blackjack.h"
 #include "deck.h"
+#include "menu.h"

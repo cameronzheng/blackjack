@@ -5,5 +5,7 @@
 #include <cstdlib>
 
 void Blackjack(void);
-void WelcomeScreen(bool& running);
+// void WelcomeScreen(bool& running);
 void Menu(void);
+
+void DisplayMoney(void);
