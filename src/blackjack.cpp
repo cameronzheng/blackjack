@@ -17,12 +17,15 @@ void test(void)
 
     if (drawCard == 'y')
     {
-      std::cout << "CARD DRAWN: " << DrawCard(deck, cardsDrawn) << std::endl;
+      std::cout << "CARD DRAWN: " << CardName(DrawCard(deck, cardsDrawn)) << std::endl;
+
     }
 
     std::cout << "Cards drawn: " << cardsDrawn << std::endl;
 
   } while (drawCard == 'y');
+
+  PrintDeck(deck);
 }
 
 void Blackjack(void)

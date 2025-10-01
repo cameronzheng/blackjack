@@ -75,7 +75,7 @@ int DrawCard(int (&deck)[CARDS], int &cardsDrawn)
       cardsDrawn++;
     }
 
-  } while (validCard == false || cardsDrawn < 52);
+  } while (validCard == false && cardsDrawn < 52);
 
   if (cardsDrawn == 52)
   {
@@ -95,3 +95,44 @@ int DrawCard(int (&deck)[CARDS], int &cardsDrawn)
 }
 
 // TODO: Names of the card
+std::string CardName(const int &index)
+{
+  /**
+   * @brief returns the name of the card that was drawn
+   * 
+   * @return String of the name and suit of the card
+   */
+
+  // getting the card value out of 13 cards
+  int cardVal = (index % 13) + 1;
+
+  // get the suit symbol from the index of the deck
+  std::string cardSuit = SUITS[((index + 1) / 13) % 4];
+  std::string cardName = "";
+
+  switch(cardVal)
+  {
+    case(1):
+      cardName = "Ace";
+      break;
+
+    case(11):
+      cardName = "Jack";
+      break;
+    
+    case(12):
+      cardName = "Queen";
+      break;
+    
+    case(13):
+      cardName = "King";
+      break;
+
+    default:
+      cardName = std::to_string(cardVal);
+      break;
+  }
+
+  // if the card number is greater than 10 
+  return cardName + cardSuit;
+}
