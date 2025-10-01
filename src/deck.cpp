@@ -42,33 +42,48 @@ TODO: how to draw a card
 needs to take in a random suit and a random value from 0 to 12 (plus one since we are going from 1 to King)
 
 */
-void DrawCard(int (&deck)[CARDS])
+
+int DrawCard(int (&deck)[CARDS], int &cardsDrawn)
 {
+  /**
+   * @brief Draws a card at random from the deck of cards. Makes sure a new card is drawn.
+   * 
+   * @param int(&deck)[CARDS] Deck of cards.
+   * @param int &cardsDrawn Reference to total amount of cards drawn this round.
+   * 
+   * @return integer in the form of the index of the deck.
+   */  
   // using uniform integer distribution
 
   bool validCard = false;
+  int index = -1;
 
-  // construct a trivial random number generator engine from a time-based seed:
-  unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-  std::default_random_engine generator (seed);
-
-  std::uniform_int_distribution<int> distribution (0, 51);
-
-  system("clear");
-  PrintDeck(deck);
-
-  int index = distribution(generator);
-  std::cout << "Index: " << index << std::endl;
-  if (deck[index] == 0)
+  do 
   {
-    std::cout << "The card has already been drawn" << std::endl;
-  }
-  else
+    // construct a trivial random number generator engine from a time-based seed:
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator (seed);
+  
+    std::uniform_int_distribution<int> distribution (0, 51);
+    index = distribution(generator);
+
+    if (deck[index] != 0) // card is drawn
+    {
+      // card is drawn
+      deck[index] = 0;
+      validCard = true;
+      cardsDrawn++;
+    }
+
+  } while (validCard == false || cardsDrawn < 52);
+
+  if (cardsDrawn == 52)
   {
-    deck[index] = 0;
-    std::cout << "we drew the card. heres the new deck" << std::endl;
-    PrintDeck(deck);
+    std::cout << "ERROR: Max amount of cards drawn." << std::endl;  
+    return -1;
   }
+
+  return index;
   
 
   // // generate random number between 1 and 13

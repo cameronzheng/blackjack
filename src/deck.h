@@ -9,7 +9,7 @@
 
 void DeckInit(int (&deck)[CARDS]);
 void PrintDeck(const int (&deck)[CARDS]);
-void DrawCard(int (&deck)[CARDS]);
+int DrawCard(int (&deck)[CARDS], int &cardsDrawn);
 
 
 const std::string SPADE = "\u2664";

@@ -7,7 +7,7 @@ void test(void)
   DeckInit(deck);
 
   char drawCard = 'n';
-
+  int cardsDrawn = 0;
 
   do
   {
@@ -16,7 +16,11 @@ void test(void)
     std::cout << std::endl;
 
     if (drawCard == 'y')
-      DrawCard(deck);
+    {
+      std::cout << "CARD DRAWN: " << DrawCard(deck, cardsDrawn) << std::endl;
+    }
+
+    std::cout << "Cards drawn: " << cardsDrawn << std::endl;
 
   } while (drawCard == 'y');
 }
