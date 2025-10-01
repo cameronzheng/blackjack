@@ -5,10 +5,11 @@
 
 #define DECK_SUITS 4
 #define DECK_NUMS 13
+#define CARDS 52
 
-void DeckInit(int (&deck)[DECK_SUITS][DECK_NUMS]);
-void PrintDeck(const int (&deck)[DECK_SUITS][DECK_NUMS]);
-void DrawCard(void);
+void DeckInit(int (&deck)[CARDS]);
+void PrintDeck(const int (&deck)[CARDS]);
+void DrawCard(int (&deck)[CARDS]);
 
 
 const std::string SPADE = "\u2664";
@@ -30,7 +31,7 @@ enum cardName
   Eight,
   Nine,
   Ten,
-  Jack,
-  Queen,
-  King
+  Jack = 10,
+  Queen = 10,
+  King = 10
 };

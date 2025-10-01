@@ -7,6 +7,8 @@
 #include <random>
 #include <chrono>
 
+#include <vector>
+
 #include "blackjack.h"
 #include "deck.h"
 #include "menu.h"

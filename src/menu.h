@@ -2,4 +2,6 @@
 
 #include "general.h"
 
-void WelcomeScreen(bool& exit);
+void WelcomeScreen(void);
+void Menu(bool& exit);
+void Rules(void);

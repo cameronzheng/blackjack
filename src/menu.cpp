@@ -2,7 +2,7 @@
 
 // functions for the menu screen
 
-void WelcomeScreen(bool& exit)
+void WelcomeScreen(void)
 {
   system("clear");
   std::cout << "Welcome to Blackjack!" << std::endl;
@@ -10,7 +10,18 @@ void WelcomeScreen(bool& exit)
   // how to play
   // play
   // exit
+}
 
+// TODO: Function for menu options
+void Menu(bool& exit)
+{
+  /**
+   * @brief Displays the options in the menu that the player can choose from
+   * 
+   * @param option The option the player has chosen
+   * 
+   * @return None
+   */
   std::cout << "Select an option below from the menu:" << std::endl;
   std::cout << "1. Rules and How to Play Blackjack" << std::endl;
   std::cout << "2. Play Blackjack" << std::endl;
@@ -22,7 +33,7 @@ void WelcomeScreen(bool& exit)
   switch(option)
   {
     case 1:
-      std::cout << "This is how you play blackjack boi" << std::endl;
+      Rules();
       break;
 
     case 2: 
@@ -31,7 +42,7 @@ void WelcomeScreen(bool& exit)
 
     case 3:
       std::cout << "Exiting program" << std::endl;
-      exit = false;
+      exit = true;
       break;
     
     default:
@@ -40,13 +51,17 @@ void WelcomeScreen(bool& exit)
   }
 }
 
-// TODO: Function for menu options
-/**
- * @brief Displays the options in the menu that the player can choose from
- * 
- * @param option The option the player has chosen
- * 
- * @return None
- */
+void Rules(void)
+{
+  /**
+   * @brief describes the rules of blackjack and how to play
+   * 
+   * @return none
+   */
+  std::cout << "This is how you play blackjack boi" << std::endl;
 
-
+  char exit = ' ';
+  std::cout << "\nPress Enter to exit rules";
+  std::cin >> exit;
+  std::cout << std::endl;
+}

@@ -8,14 +8,11 @@
  * @return Returns None
  * 
  */
-void DeckInit(int (&deck)[DECK_SUITS][DECK_NUMS])
+void DeckInit(int (&deck)[CARDS])
 {
-  for (int i = 0; i < DECK_SUITS; i++)
+  for (int i = 0; i < CARDS; i++)
   {
-    for (int j = 0; j < DECK_NUMS; j++)
-    {
-      deck[i][j] = 1;
-    }
+    deck[i] = 1;
   }
 }
 
@@ -27,14 +24,14 @@ void DeckInit(int (&deck)[DECK_SUITS][DECK_NUMS])
  * 
  * @return Returns None
  */
-void PrintDeck(const int (&deck)[DECK_SUITS][DECK_NUMS])
+void PrintDeck(const int (&deck)[CARDS])
 {
   for (int i = 0; i < DECK_SUITS; i++)
   {
     std::cout << SUITS[i] << ": ";
-    for (int j = 0; j < DECK_NUMS; j++)
+    for (int j = i * DECK_NUMS; j < (i * DECK_NUMS) + DECK_NUMS; j++)
     {
-      std::cout << deck[i][j] << " ";
+      std::cout << deck[j] << " ";
     }
     std::cout << std::endl;
   }
@@ -45,20 +42,34 @@ TODO: how to draw a card
 needs to take in a random suit and a random value from 0 to 12 (plus one since we are going from 1 to King)
 
 */
-void DrawCard(void)
+void DrawCard(int (&deck)[CARDS])
 {
   // using uniform integer distribution
+
+  bool validCard = false;
 
   // construct a trivial random number generator engine from a time-based seed:
   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
   std::default_random_engine generator (seed);
 
-  std::uniform_int_distribution<int> distribution (1, 10);
+  std::uniform_int_distribution<int> distribution (0, 51);
 
-  for (int i = 0; i < 10; ++i)
-    std::cout << distribution(generator) << " ";
+  system("clear");
+  PrintDeck(deck);
 
-  std::cout << std::endl;
+  int index = distribution(generator);
+  std::cout << "Index: " << index << std::endl;
+  if (deck[index] == 0)
+  {
+    std::cout << "The card has already been drawn" << std::endl;
+  }
+  else
+  {
+    deck[index] = 0;
+    std::cout << "we drew the card. heres the new deck" << std::endl;
+    PrintDeck(deck);
+  }
+  
 
   // // generate random number between 1 and 13
   // int cardNum = rand() % 13 + 1;
@@ -67,3 +78,5 @@ void DrawCard(void)
 
   // std::cout << "Card: " << cardNum << SUITS[cardSuit] << std::endl;
 }
+
+// TODO: Names of the card

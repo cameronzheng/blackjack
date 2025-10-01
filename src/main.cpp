@@ -2,7 +2,8 @@
 
 int main()
 {
-  Blackjack();
+  test();
+  // Blackjack();
   return 0;
 }
 

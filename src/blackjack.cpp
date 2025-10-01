@@ -1,30 +1,52 @@
 #include "blackjack.h"
 
+void test(void)
+{
+  // ask if you want to draw another card
+  int deck[CARDS] = {};
+  DeckInit(deck);
+
+  char drawCard = 'n';
+
+
+  do
+  {
+    std::cout << "Do you want to draw a card? (y/n): ";
+    std::cin >> drawCard;
+    std::cout << std::endl;
+
+    if (drawCard == 'y')
+      DrawCard(deck);
+
+  } while (drawCard == 'y');
+}
+
 void Blackjack(void)
 {
-  int deck[DECK_SUITS][DECK_NUMS] = {0};
+
+  // initialized values
+  int deck[CARDS] = {};
+  DeckInit(deck);
 
 
-  int money = 1000;
-  bool running = true;
-
+  double money = 1000.0;
+  bool exit = false;
+  
   // game logic sequence
   // 1. player will be welcomed
   // 2. dealer will pass out cards 
   // 3. present the actions the player can do with the cards (hit/stand)
   // 4. determine the result from the dealer
   // 5. repeat until money is gone
-
-  DeckInit(deck);
-  PrintDeck(deck);
   
-  WelcomeScreen(running);
-
-  for (int i = 0; i < 5; i++)
-  {
-    DrawCard();
-  }
-
+  // PrintDeck(deck);
+  
+  // for (int i = 0; i < 5; i++)
+  // {
+    //   DrawCard();
+    // }
+    
+  WelcomeScreen();
   // game pseudo code
 
   /*
@@ -39,7 +61,14 @@ void Blackjack(void)
 
   */
 
+
+
   // while loop
+  while(!exit)
+  {
+    Menu(exit);
+    system("clear");
+  }
     // ask the user for their menu option
       // 1. Rules
       // 2. Play the game
@@ -52,30 +81,36 @@ void Blackjack(void)
       
       
     // once an option is picked, we need to clear the screen
+  std::cout << "Goodbye :(" << std::endl;
 
 }
 
-
 // TODO: Function to display the total amount of money the player has
-void DisplayMoney(void)
+void DisplayMoney(const double& money)
 {
   /**
    * @brief Displays the total amount of money the player has
    * 
-   * @param None
+   * @param money amount of money the player has
    * 
    * @return None
    */
+
+   printf("Total amount of money: $%.2f\n", money);
 }
 
 // TODO: Function to calculate the current hand total
-/**
- * @brief Calculates the current hands total
- * 
- * @param handOfCards vector that is dynamically sized for the current hand
- * 
- * @return Returns the total amount the hand adds up to
- */
+int CalculateHand(void)
+{
+  /**
+   * @brief Calculates the current hands total
+   * 
+   * @param handOfCards vector that is dynamically sized for the current hand
+   * 
+   * @return Returns the total amount the hand adds up to
+   */
+  return 0;
+}
 
 // TODO: Function to draw two cards each for the Blackjack game (start of the game)
 /**
