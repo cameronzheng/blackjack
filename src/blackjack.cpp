@@ -6,26 +6,24 @@ void test(void)
   int deck[CARDS] = {};
   DeckInit(deck);
 
-  char drawCard = 'n';
   int cardsDrawn = 0;
 
-  do
-  {
-    std::cout << "Do you want to draw a card? (y/n): ";
-    std::cin >> drawCard;
-    std::cout << std::endl;
+  std::vector<int> userHand;    // user's hand of cards
+  std::vector<int> dealerHand;  // dealer's hand of cards
 
-    if (drawCard == 'y')
-    {
-      std::cout << "CARD DRAWN: " << CardName(DrawCard(deck, cardsDrawn)) << std::endl;
+  StartingHandDraw(userHand, dealerHand, deck, cardsDrawn);
 
-    }
+  std::cout << "User's hand: ";
+  for (int i = 0; i < userHand.size(); i++)
+    std::cout << CardName(userHand[i]) << " ";
+  std::cout << std::endl;
 
-    std::cout << "Cards drawn: " << cardsDrawn << std::endl;
+  std::cout << "Dealer's hand: ";
+  for (int i = 0; i < dealerHand.size(); i++)
+    std::cout << CardName(dealerHand[i]) << " ";   
 
-  } while (drawCard == 'y');
-
-  PrintDeck(deck);
+  std::cout << std::endl;
+  
 }
 
 void Blackjack(void)
@@ -120,14 +118,24 @@ int CalculateHand(void)
 }
 
 // TODO: Function to draw two cards each for the Blackjack game (start of the game)
-/**
- * @brief Draws two cards each for the blackjack game to start the game
- * 
- * @param userHand Vector for the user's hand of cards
- * @param dealerHand Vector for the dealer's hand of cards
- * 
- * @return None
- */
+void StartingHandDraw(std::vector<int> &userHand, std::vector<int> &dealerHand, int (&deck)[CARDS], int &cardsDrawn)
+{
+  /**
+   * @brief Draws two cards each for the blackjack game to start the game
+   * 
+   * @param userHand Vector for the user's hand of cards
+   * @param dealerHand Vector for the dealer's hand of cards
+   * 
+   * @return None
+   */
+  // loop twice
+  for (int i = 0; i < 2; i++)
+  {
+    userHand.push_back(DrawCard(deck, cardsDrawn));
+    dealerHand.push_back(DrawCard(deck, cardsDrawn));
+  }
+
+}
 
 // TODO: Function to determine if the card hand is valid
 /**
