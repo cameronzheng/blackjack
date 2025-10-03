@@ -136,3 +136,20 @@ std::string CardName(const int &index)
   // if the card number is greater than 10 
   return cardName + cardSuit;
 }
+
+int CardNumberValue(const int &index)
+{
+  /**
+   * @brief returns the card value from 1 to 10
+   * 
+   * @param index index value for the deck (52)
+   * 
+   * @return returns the value from 1 to 10
+   */
+
+  // getting the card value out of 13 cards
+  int cardVal = (index % 13) + 1;
+  if (cardVal > 10)
+    cardVal = 10;
+  return cardVal;
+}

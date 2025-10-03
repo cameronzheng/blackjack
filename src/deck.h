@@ -11,6 +11,7 @@ void DeckInit(int (&deck)[CARDS]);
 void PrintDeck(const int (&deck)[CARDS]);
 int DrawCard(int (&deck)[CARDS], int &cardsDrawn);
 std::string CardName(const int &index);
+int CardNumberValue(const int &index);
 
 
 const std::string SPADE = "\u2664";

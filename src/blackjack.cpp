@@ -23,7 +23,10 @@ void test(void)
     std::cout << CardName(dealerHand[i]) << " ";   
 
   std::cout << std::endl;
-  
+
+
+  int hand = CalculateHand(userHand);
+  std::cout << "Users hand total: " << hand << std::endl;
 }
 
 void Blackjack(void)
@@ -105,7 +108,7 @@ void DisplayMoney(const double& money)
 }
 
 // TODO: Function to calculate the current hand total
-int CalculateHand(void)
+int CalculateHand(std::vector<int> &cards)
 {
   /**
    * @brief Calculates the current hands total
@@ -114,11 +117,21 @@ int CalculateHand(void)
    * 
    * @return Returns the total amount the hand adds up to
    */
-  return 0;
+  // std::cout << CardName(cards[0]) << std::endl;
+  // std::cout << CardNumberValue(cards[0]) << std::endl;
+  int sum = 0;
+
+  for (int i = 0; i < cards.size(); i++)
+  {
+    sum += CardNumberValue(cards[i]);
+  }
+
+  
+  return sum;
 }
 
 // TODO: Function to draw two cards each for the Blackjack game (start of the game)
-void StartingHandDraw(std::vector<int> &userHand, std::vector<int> &dealerHand, int (&deck)[CARDS], int &cardsDrawn)
+void StartingHandDraw(std::vector<int> &userHand, std::vector<int> &dealerHand, int (&deck)[52], int &cardsDrawn)
 {
   /**
    * @brief Draws two cards each for the blackjack game to start the game
@@ -149,13 +162,16 @@ void StartingHandDraw(std::vector<int> &userHand, std::vector<int> &dealerHand, 
 
 
 // TODO: Function to ask the player to hit or stand and determine that result
-/** 
- * @brief Asks the player to hit or stand and determines the result of the current hand
- * 
- * @param userHand Vector that holds the user's hand of cards
- * 
- * @return None
- */
+void UserAction(void)
+{
+  /** 
+   * @brief Asks the player to hit or stand and determines the result of the current hand
+   * 
+   * @param userHand Vector that holds the user's hand of cards
+   * 
+   * @return None
+   */
+}
 
 
 // TODO: Function to run the dealers turn
