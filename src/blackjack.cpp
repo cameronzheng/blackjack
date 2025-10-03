@@ -1,64 +1,64 @@
 #include "blackjack.h"
 
-void Blackjack(void)
-{
-  int deck[DECK_SUITS][DECK_NUMS] = {0};
 
 
-  int money = 1000;
-  bool running = true;
+// void Blackjack(void)
+// {
+//   int deck[DECK_SUITS][DECK_NUMS] = {0};
 
-  // game logic sequence
-  // 1. player will be welcomed
-  // 2. dealer will pass out cards 
-  // 3. present the actions the player can do with the cards (hit/stand)
-  // 4. determine the result from the dealer
-  // 5. repeat until money is gone
 
-  DeckInit(deck);
-  PrintDeck(deck);
+//   int money = 1000;
+//   bool running = true;
+
+//   // game logic sequence
+//   // 1. player will be welcomed
+//   // 2. dealer will pass out cards 
+//   // 3. present the actions the player can do with the cards (hit/stand)
+//   // 4. determine the result from the dealer
+//   // 5. repeat until money is gone
+
+//   DeckInit(deck);
+//   PrintDeck(deck);
   
-  WelcomeScreen(running);
+//   WelcomeScreen(running);
 
-  for (int i = 0; i < 5; i++)
-  {
-    DrawCard();
-  }
+//   for (int i = 0; i < 5; i++)
+//   {
+//     DrawCard();
+//   }
 
-  // game pseudo code
+//   // game pseudo code
 
-  /*
-    1. If the player enters a certain number on the menu screen, we will enter the gameplay screen
-    2. Displays the amount of money the player has to bet, cards in the deck
-    3. Pass out cards to the dealer and the player. Player first then dealer. Two cards each
-    4. Player should be asked to hit or stand. Hit adds a card to their hand. Stand makes them not draw a card
-    5. Calculate the players hand to make sure it is <= 21. If hand > 21, this is a bust and the dealer automatically wins
-    6. If the player is still in the game, the dealer will start to draw cards as well. if their total reaches >= 17, they will stop hitting. 
-    7. Compare their hand to the players hand and determine the result.
-    8. If the player wins, give them 1.5x their bet. Player loses, they will lose their bet.
+//   /*
+//     1. If the player enters a certain number on the menu screen, we will enter the gameplay screen
+//     2. Displays the amount of money the player has to bet, cards in the deck
+//     3. Pass out cards to the dealer and the player. Player first then dealer. Two cards each
+//     4. Player should be asked to hit or stand. Hit adds a card to their hand. Stand makes them not draw a card
+//     5. Calculate the players hand to make sure it is <= 21. If hand > 21, this is a bust and the dealer automatically wins
+//     6. If the player is still in the game, the dealer will start to draw cards as well. if their total reaches >= 17, they will stop hitting. 
+//     7. Compare their hand to the players hand and determine the result.
+//     8. If the player wins, give them 1.5x their bet. Player loses, they will lose their bet.
 
-  */
+//   */
 
-  // while loop
-    // ask the user for their menu option
-      // 1. Rules
-      // 2. Play the game
-      // 3. exit the program
-    // switch statement
-      // 1. run the rules function
-      // 2. run the game function
-      // 3. exit the program
-      // default: display that is not an option
+//   // while loop
+//     // ask the user for their menu option
+//       // 1. Rules
+//       // 2. Play the game
+//       // 3. exit the program
+//     // switch statement
+//       // 1. run the rules function
+//       // 2. run the game function
+//       // 3. exit the program
+//       // default: display that is not an option
       
       
-    // once an option is picked, we need to clear the screen
+//     // once an option is picked, we need to clear the screen
 
-}
+// }
 
 
 // TODO: Function to display the total amount of money the player has
-void DisplayMoney(void)
-{
   /**
    * @brief Displays the total amount of money the player has
    * 
@@ -66,7 +66,6 @@ void DisplayMoney(void)
    * 
    * @return None
    */
-}
 
 // TODO: Function to calculate the current hand total
 /**
