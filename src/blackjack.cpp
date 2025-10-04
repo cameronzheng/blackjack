@@ -1,7 +1,20 @@
 #include "blackjack.h"
 
+void Blackjack::StartRound(void)
+{
+  /**
+   * @brief Starts the game by handing out two cards each to the player and the dealer
+   * 
+   * @return None
+   */
+  // player.AddCard(deck.DrawCard());
+  //  dealer.AddCard(deck.DrawCard());
+  //  player.AddCard(deck.DrawCard());
+  //  dealer.AddCard(deck.DrawCard());
 
-
+  //  player.ShowCards();
+  //  dealer.ShowCards();
+}
 // void Blackjack(void)
 // {
 //   int deck[DECK_SUITS][DECK_NUMS] = {0};
@@ -137,3 +150,9 @@
 
 // ? Extra rules later
 
+int main()
+{
+  Blackjack blackjack;
+  blackjack.StartRound();
+  return 0;
+}

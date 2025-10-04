@@ -115,7 +115,7 @@ int Deck::DrawCard(void)
   // std::cout << "Card: " << cardNum << SUITS[cardSuit] << std::endl;
 }
 
-std::string Deck::CardSuit(int &cardIndex)
+std::string Deck::CardSuit(const int &cardIndex)
 {
   /**
    * @brief Gets the suit of the card
@@ -129,7 +129,7 @@ std::string Deck::CardSuit(int &cardIndex)
    
 }
 
-int Deck::CardNumInt(int &cardIndex)
+int Deck::CardNumInt(const int &cardIndex)
 {
   /**
    * @brief Gets the number value of the card
@@ -142,7 +142,7 @@ int Deck::CardNumInt(int &cardIndex)
   return (cardIndex % 13) + 1;
 }
 
-std::string Deck::CardNumStr(int &cardIndex)
+std::string Deck::CardNumStr(const int &cardIndex)
 {
   /**
    * @brief Gets the string value of the number drawn
@@ -185,7 +185,7 @@ std::string Deck::CardNumStr(int &cardIndex)
 
 
 
-std::string Deck::Card(int &cardIndex)
+std::string Deck::Card(const int &cardIndex)
 {
   /**
    * @brief The string of the card itself
@@ -195,11 +195,11 @@ std::string Deck::Card(int &cardIndex)
   return CardNumStr(cardIndex) + CardSuit(cardIndex);
 }
 
-int main()
-{
-  Deck deck;
+// int main()
+// {
+//   Deck deck;
 
-  deck.PrintDeck();
+//   deck.PrintDeck();
 //   int card;
 
 //   for (int i = 0; i < 10; i++)
@@ -214,5 +214,5 @@ int main()
 //   }
 
 //   // deck.PrintDeck();
-  return 0;
-}
+//   return 0;
+// }

@@ -1,8 +1,8 @@
-#include "general.h"
+#include "deck.h"
 
 int main()
 {
-  Blackjack();
+
   return 0;
 }
 

@@ -58,8 +58,8 @@ class Deck
     void ResetDeck(void);
     void PrintDeck(void);
     int DrawCard(void);
-    std::string CardSuit(int &cardIndex);
-    int CardNumInt(int &cardIndex);
-    std::string CardNumStr(int &cardIndex);
-    std::string Card(int&cardIndex);
+    std::string CardSuit(const int &cardIndex);
+    int CardNumInt(const int &cardIndex);
+    std::string CardNumStr(const int &cardIndex);
+    std::string Card(const int&cardIndex);
 };

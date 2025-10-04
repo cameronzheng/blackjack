@@ -13,13 +13,14 @@
 class Blackjack
 {
   private:
-    Player player;
-    Player dealer;
     Deck deck;
-
+    // Player player;
+    // Player dealer;
+  
   public:
 
     // todo: initialize the player and the dealer 
+    void StartRound(void);
     // TODO: Calculate the current hand total
     // todo: display amount of money the player has
     // todo: valididate the player's hand
