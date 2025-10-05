@@ -7,14 +7,150 @@ void Blackjack::StartRound(void)
    * 
    * @return None
    */
-  // player.AddCard(deck.DrawCard());
-  //  dealer.AddCard(deck.DrawCard());
-  //  player.AddCard(deck.DrawCard());
-  //  dealer.AddCard(deck.DrawCard());
 
-  //  player.ShowCards();
-  //  dealer.ShowCards();
+  // player and dealer receive two cards at the start of the round
+  for (int i = 0; i < 2; i++)
+  {
+    player.AddCard(deck.DrawCard());
+    dealer.AddCard(deck.DrawCard());
+  } 
+  std::vector<int> playerHand = player.ShowCards();
+  DisplayHand(playerHand);
+  std::cout << CalculateHand(playerHand) << std::endl;
+  std::cout << ValidHand(playerHand) << std::endl;
 }
+
+void Blackjack::DisplayHand(std::vector<int> hand)
+{
+  /**
+   * @brief shows the elements in the vector passed into it
+   * 
+   * @param hand Not pass by reference since we are accepting a new vector
+   */
+  for (int i = 0; i < hand.size(); i++)
+  {
+    std::cout << deck.Card(hand[i]) << " ";
+  } 
+  std::cout << std::endl;
+}
+
+int Blackjack::CalculateHand(std::vector<int> hand)
+{
+  /**
+   * @brief calculates the current hand. Accounts for multiple ACEs in a hand
+   * 
+   * @param hand vector of indexes from the deck
+   * 
+   * @return integer holding the total sum of the hand
+   */
+
+  // keep in mind of the ace
+  int sum = 0; 
+  int aceCount = 0;
+  for (int i = 0; i < hand.size(); i++)
+  {
+    if (deck.CardNumInt(hand[i]) == 1)
+    {
+      sum += 11;
+      aceCount++;
+    }
+    // check if there is an "ACE"
+    else if (deck.CardNumInt(hand[i]) > 10)
+    {
+      sum += 10;
+    }
+    else
+    {
+      sum += deck.CardNumInt(hand[i]);
+    }
+  }
+
+  // handle the ACES
+  while (sum > 21 && aceCount > 0)
+  {
+    sum -= 10;
+    aceCount--;
+  }
+
+  return sum;
+}
+
+void Blackjack::DisplayMoney(void)
+{
+  /**
+   * @brief displays the current amount of money the player has
+   */
+  std::cout << "$" << player.MoneyRemaining() << std::endl;
+}
+
+// todo: calculate the amount of variations in hands based on if an ACE is in the hand
+
+// TODO: Function to determine if the card hand is valid
+bool Blackjack::ValidHand(std::vector<int> hand)
+{
+  /**
+   * @brief Determines if the current hand is valid by adding up the cards
+   * 
+   * @param currHand Vector that holds the user's hand of cards
+   * 
+   * @return boolean value that will determine if the hand is valid or not
+   */
+  // use the calculate current hand function above
+  return (CalculateHand(hand) <= 21) ? true : false; 
+}
+
+
+// TODO: Function to ask the player to hit or stand and determine that result
+/** 
+ * @brief Asks the player to hit or stand and determines the result of the current hand
+ * 
+ * @param userHand Vector that holds the user's hand of cards
+ * 
+ * @return None
+ */
+
+
+// TODO: Function to run the dealers turn
+/**
+ * @brief Runs the dealer's turn until the dealer reaches cards >= 17
+ * 
+ * @param dealerHand Vector that holds the dealer's hand of cards
+ * 
+ * @return None
+ */
+
+// TODO: Function to compare the player and dealer's hand
+/**
+ * @brief Compares the player's and dealer's hand to determine who had the greater total
+ * 
+ * @param userHand Vector that holds the user's hand of cards
+ * @param dealerHand Vector that holds the dealer's hand of cards
+ * 
+ * @return boolean of whether the player has won (True) or lost (False)
+ */
+
+// TODO: Function to calculate the total winnings for the player
+/**
+ * @brief Calcualtes the amount of money the player wins after winning the round
+ * 
+ * @param userBet The total amount of money the user bet during this round of play
+ * 
+ * @return integer value of the amount of money the player has won
+ */
+
+// ? Extra rules later
+
+int main()
+{
+  
+  Blackjack blackjack;
+  blackjack.StartRound();
+  blackjack.DisplayMoney();
+
+  return 0;
+}
+
+
 // void Blackjack(void)
 // {
 //   int deck[DECK_SUITS][DECK_NUMS] = {0};
@@ -71,88 +207,3 @@ void Blackjack::StartRound(void)
 // }
 
 
-// TODO: Function to display the total amount of money the player has
-  /**
-   * @brief Displays the total amount of money the player has
-   * 
-   * @param None
-   * 
-   * @return None
-   */
-
-// TODO: Function to calculate the current hand total
-/**
- * @brief Calculates the current hands total
- * 
- * @param handOfCards vector that is dynamically sized for the current hand
- * 
- * @return Returns the total amount the hand adds up to
- */
-
-// TODO: Function to draw two cards each for the Blackjack game (start of the game)
-/**
- * @brief Draws two cards each for the blackjack game to start the game
- * 
- * @param userHand Vector for the user's hand of cards
- * @param dealerHand Vector for the dealer's hand of cards
- * 
- * @return None
- */
-
-// TODO: Function to determine if the card hand is valid
-/**
- * @brief Determines if the current hand is valid by adding up the cards
- * 
- * @param currHand Vector that holds the user's hand of cards
- * 
- * @return boolean value that will determine if the hand is valid or not
- */
-// use the calculate current hand function above
-
-
-// TODO: Function to ask the player to hit or stand and determine that result
-/** 
- * @brief Asks the player to hit or stand and determines the result of the current hand
- * 
- * @param userHand Vector that holds the user's hand of cards
- * 
- * @return None
- */
-
-
-// TODO: Function to run the dealers turn
-/**
- * @brief Runs the dealer's turn until the dealer reaches cards >= 17
- * 
- * @param dealerHand Vector that holds the dealer's hand of cards
- * 
- * @return None
- */
-
-// TODO: Function to compare the player and dealer's hand
-/**
- * @brief Compares the player's and dealer's hand to determine who had the greater total
- * 
- * @param userHand Vector that holds the user's hand of cards
- * @param dealerHand Vector that holds the dealer's hand of cards
- * 
- * @return boolean of whether the player has won (True) or lost (False)
- */
-
-// TODO: Function to calculate the total winnings for the player
-/**
- * @brief Calcualtes the amount of money the player wins after winning the round
- * 
- * @param userBet The total amount of money the user bet during this round of play
- * 
- * @return integer value of the amount of money the player has won
- */
-
-// ? Extra rules later
-
-int main()
-{
-  Blackjack blackjack;
-  blackjack.StartRound();
-  return 0;
-}

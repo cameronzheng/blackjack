@@ -1,8 +1,8 @@
 #include "player.h"
 
-Player::Player(Deck &deck)
+Player::Player()
 {
-
+  moneyTotal = 1000;
 }
 
 void Player::AddCard(const int &card)
@@ -13,14 +13,36 @@ void Player::AddCard(const int &card)
   currentHand.push_back(card);
 }
 
-void Player::ShowCards(void)
+std::vector<int> Player::ShowCards(void)
 {
   /**
    * @brief displays the cards in the player's hand
    */
-  for (int i = 0; i < currentHand.size(); i++)
+  return currentHand;
+}
+
+void Player::ResetHand(void)
+{
+  /**
+   * @brief Resets the player's hand
+   * 
+   * @return None
+   */
+
+  if (currentHand.empty() == false)
   {
-    std::cout << currentHand[i] << ' ';
+    // std::cout << currentHand.size() << std::endl;
+    currentHand.pop_back();
+    currentHand.erase(currentHand.begin(), currentHand.end());
   }
-  std::cout << std::endl;
+}
+
+int Player::MoneyRemaining(void)
+{
+  /**
+   * @brief returns the amount of money remaining
+   * 
+   * @return integer value of the money
+   */
+  return moneyTotal;
 }

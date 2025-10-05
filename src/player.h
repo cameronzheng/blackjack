@@ -9,12 +9,13 @@ class Player
   private:
     int moneyTotal;
     std::vector<int> currentHand;
-
+  
   public:
-    Player(Deck &deck); // constructor
+    Player(); // constructor
 
-    int currentBet = 99;
-
+    int currentBet;
     void AddCard(const int &card);
-    void ShowCards(void);
+    std::vector<int> ShowCards(void);
+    void ResetHand(void);
+    int MoneyRemaining(void);
 };

@@ -138,7 +138,6 @@ int Deck::CardNumInt(const int &cardIndex)
    * 
    * @return Integer of the number value
    */
-
   return (cardIndex % 13) + 1;
 }
 
