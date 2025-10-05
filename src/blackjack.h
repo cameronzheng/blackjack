@@ -22,23 +22,33 @@ class Blackjack
 
     // todo: initialize the player and the dealer 
 
-    // todo: starts the blackjack round
+    // starts the blackjack round
     void StartRound(void);
 
-    // todo: display the current hand
+    // resets the blackjack round (clearing the cards)
+    void ResetRound(void);
+
+    // display the current hand
     void DisplayHand(std::vector<int> hand);
 
-    // TODO: Calculate the current hand total
+    // Calculate the current hand total
     int CalculateHand(std::vector<int> hand);
 
-    // todo: display amount of money the player has
+    // display amount of money the player has
     void DisplayMoney(void);
 
-    // todo: valididate the player's hand
+    // valididate the player's hand
     bool ValidHand(std::vector<int> hand);
 
     // todo: function to ask the player if they want to "hit" or "stand"
+    void PlayerAction(void);
 
     // todo: run the dealer's turn
+    void DealerAction(void);
+
+    // todo: compare the player's and dealer's hand and return if the player won
+    std::string CompareHands(void);
+
+    // todo: calculate the winnings of the round
 
 };

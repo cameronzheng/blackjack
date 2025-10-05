@@ -14,10 +14,20 @@ void Blackjack::StartRound(void)
     player.AddCard(deck.DrawCard());
     dealer.AddCard(deck.DrawCard());
   } 
-  std::vector<int> playerHand = player.ShowCards();
-  DisplayHand(playerHand);
-  std::cout << CalculateHand(playerHand) << std::endl;
-  std::cout << ValidHand(playerHand) << std::endl;
+  // std::vector<int> playerHand = player.ShowCards();
+  // DisplayHand(playerHand);
+  // std::cout << CalculateHand(playerHand) << std::endl;
+  // std::cout << ValidHand(playerHand) << std::endl;
+}
+
+void Blackjack::ResetRound(void)
+{
+  /**
+   * @brief resets the round by reseting the player and dealer hand
+   */
+
+  player.ResetHand();
+  dealer.ResetHand();
 }
 
 void Blackjack::DisplayHand(std::vector<int> hand)
@@ -83,8 +93,6 @@ void Blackjack::DisplayMoney(void)
   std::cout << "$" << player.MoneyRemaining() << std::endl;
 }
 
-// todo: calculate the amount of variations in hands based on if an ACE is in the hand
-
 // TODO: Function to determine if the card hand is valid
 bool Blackjack::ValidHand(std::vector<int> hand)
 {
@@ -101,35 +109,96 @@ bool Blackjack::ValidHand(std::vector<int> hand)
 
 
 // TODO: Function to ask the player to hit or stand and determine that result
-/** 
- * @brief Asks the player to hit or stand and determines the result of the current hand
- * 
- * @param userHand Vector that holds the user's hand of cards
- * 
- * @return None
- */
+void Blackjack::PlayerAction(void)
+{
+  /** 
+   * @brief Asks the player to hit or stand and determines the result of the current hand
+   * 
+   * @param userHand Vector that holds the user's hand of cards
+   * 
+   * @return None
+   */
+
+  std::cout << "Do you wish to 'hit' or 'stand'?" << std::endl;
+
+
+}
 
 
 // TODO: Function to run the dealers turn
-/**
- * @brief Runs the dealer's turn until the dealer reaches cards >= 17
- * 
- * @param dealerHand Vector that holds the dealer's hand of cards
- * 
- * @return None
- */
+void Blackjack::DealerAction(void)
+{
+  /**
+   * @brief Runs the dealer's turn until the dealer reaches cards >= 17
+   * 
+   * @param dealerHand Vector that holds the dealer's hand of cards
+   * 
+   * @return None
+   */
+  
+  // keep drawing cards until it is over 17
+  // std::cout << "Dealer's turn" << std::endl;
+  std::vector<int> dealerHand = dealer.ShowCards();
+  // DisplayHand(dealerHand);
+  // std::cout << CalculateHand(dealerHand) << std::endl;
+
+  
+  while (CalculateHand(dealerHand) < 17)
+  {
+    // draw a card
+    dealer.AddCard(deck.DrawCard());
+    dealerHand = dealer.ShowCards();
+    // DisplayHand(dealerHand);
+    // std::cout << CalculateHand(dealerHand) << std::endl;
+  }
+}
 
 // TODO: Function to compare the player and dealer's hand
-/**
- * @brief Compares the player's and dealer's hand to determine who had the greater total
- * 
- * @param userHand Vector that holds the user's hand of cards
- * @param dealerHand Vector that holds the dealer's hand of cards
- * 
- * @return boolean of whether the player has won (True) or lost (False)
- */
+std::string Blackjack::CompareHands(void)
+{
+  /**
+   * @brief Compares the player's and dealer's hand to determine who had the greater total
+   * 
+   * @param userHand Vector that holds the user's hand of cards
+   * @param dealerHand Vector that holds the dealer's hand of cards
+   * 
+   * @return boolean of whether the player has won, lost, or tied the dealer
+   */
+  std::vector<int> playerHand = player.ShowCards();
+  
+  // check if the player busted 
+  if (!ValidHand(playerHand))
+    return "lose";
+  
+  std::vector<int> dealerHand = dealer.ShowCards();
+
+  // check if dealer busted
+  if (!ValidHand(dealerHand))
+    return "win";
+
+  // get the sums of the cards
+  int playerSum = CalculateHand(playerHand);
+  int dealerSum = CalculateHand(dealerHand);
+
+  // player wins
+  if (playerSum > dealerSum)
+  {
+    return "win";
+  }
+  // player ties 
+  else if (playerSum == dealerSum)
+  {
+    return "tied";
+  }
+  // player loses
+  else
+  {
+    return "lose";
+  }
+}
 
 // TODO: Function to calculate the total winnings for the player
+
 /**
  * @brief Calcualtes the amount of money the player wins after winning the round
  * 
@@ -146,6 +215,7 @@ int main()
   Blackjack blackjack;
   blackjack.StartRound();
   blackjack.DisplayMoney();
+  blackjack.DealerAction();
 
   return 0;
 }
