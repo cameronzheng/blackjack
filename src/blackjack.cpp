@@ -14,8 +14,13 @@ void Blackjack::StartRound(void)
     player.AddCard(deck.DrawCard());
     dealer.AddCard(deck.DrawCard());
   } 
-  // std::vector<int> playerHand = player.ShowCards();
-  // DisplayHand(playerHand);
+  std::vector<int> dealerHand = dealer.ShowCards();
+  std::cout << "Dealer's Hand: ";
+  // just showing one card
+  std::cout << deck.Card(dealerHand[0]) << std::endl;
+  std::vector<int> playerHand = player.ShowCards();
+  std::cout << "Player's Hand: ";
+  DisplayHand(playerHand);
   // std::cout << CalculateHand(playerHand) << std::endl;
   // std::cout << ValidHand(playerHand) << std::endl;
 }
@@ -119,7 +124,51 @@ void Blackjack::PlayerAction(void)
    * @return None
    */
 
-  std::cout << "Do you wish to 'hit' or 'stand'?" << std::endl;
+  int userSelection = 0;
+  bool exit = false;
+  std::vector<int> playerHand = player.ShowCards();
+
+  while(!exit)
+  {
+    playerHand = player.ShowCards();
+    std::cout << "Player's Hand: ";
+    DisplayHand(playerHand);
+    std::cout << "Total: " << CalculateHand(playerHand) << std::endl;
+
+    std::cout << "Select one of the options below:" << std::endl;
+    std::cout << "1. Hit" << std::endl;
+    std::cout << "2. Stand" << std::endl;
+    std::cout << "3. Exit Game" << std::endl;
+
+    std::cin >> userSelection;
+    switch(userSelection)
+    {
+      case 1:
+        std::cout << "HIT!" << std::endl;
+        player.AddCard(deck.DrawCard());
+        playerHand = player.ShowCards();
+        break;
+      case 2: 
+        std::cout << "STAND!" << std::endl;
+        exit = true;
+        break;
+      case 3:
+        std::cout << "Exiting game :(" << std::endl;
+        std::cout << "Just kidding ! you have to keep playing boi" << std::endl;
+        break;
+      default:
+        std::cout << "ERROR: Not a valid selection, please choose again" << std::endl;
+        break;
+    }
+
+    // calculate the player's hand to see if they can still do an action
+    if (CalculateHand(playerHand) > 21)
+    {
+      std::cout << "BUST! :(" << std::endl;
+      exit = true;
+    }
+  }
+
 
 
 }
@@ -141,15 +190,20 @@ void Blackjack::DealerAction(void)
   std::vector<int> dealerHand = dealer.ShowCards();
   // DisplayHand(dealerHand);
   // std::cout << CalculateHand(dealerHand) << std::endl;
+  DisplayHand(dealerHand);
+  std::cout << "Total: " << CalculateHand(dealerHand) << std::endl;
 
   
   while (CalculateHand(dealerHand) < 17)
   {
     // draw a card
+    std::cout << "HIT!" << std::endl;
+
     dealer.AddCard(deck.DrawCard());
     dealerHand = dealer.ShowCards();
-    // DisplayHand(dealerHand);
-    // std::cout << CalculateHand(dealerHand) << std::endl;
+    
+    DisplayHand(dealerHand);
+    std::cout << "Total: " << CalculateHand(dealerHand) << std::endl;
   }
 }
 
@@ -214,8 +268,12 @@ int main()
   
   Blackjack blackjack;
   blackjack.StartRound();
-  blackjack.DisplayMoney();
+  blackjack.PlayerAction();
   blackjack.DealerAction();
+
+  std::cout << blackjack.CompareHands() << std::endl;
+  // blackjack.DisplayMoney();
+  // blackjack.DealerAction();
 
   return 0;
 }

@@ -19,8 +19,8 @@ class Blackjack
   
   public:
     // Blackjack();  // constructor
-
-    // todo: initialize the player and the dealer 
+    
+    void Gameplay(void);
 
     // starts the blackjack round
     void StartRound(void);
