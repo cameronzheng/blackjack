@@ -58,3 +58,23 @@ bool Player::ValidBet(int &bet)
    */
   return (bet <= moneyTotal) ? true : false;
 }
+
+void Player::AddTotal(int &bet)
+{
+  /**
+   * @brief Adds the bet to the player's bank
+   * 
+   * @param bet total bet the player placed
+   */
+  moneyTotal += bet;
+}
+
+void Player::SubTotal(int &bet)
+{
+  /**
+   * @brief Subtracts the bet to the player's bank
+   * 
+   * @param bet total bet the player placed
+   */
+  moneyTotal -= bet;
+}

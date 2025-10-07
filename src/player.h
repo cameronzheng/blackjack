@@ -17,5 +17,6 @@ class Player
     void ResetHand(void);
     int MoneyRemaining(void);
     bool ValidBet(int &bet);
-    // void AddTotal(void);
+    void AddTotal(int &bet);
+    void SubTotal(int &bet);
 };

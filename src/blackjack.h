@@ -25,8 +25,6 @@ class Blackjack
     std::string roundResult;
   
   public:
-    Blackjack();  // constructor
-
     void Gameplay(void);
 
     void Menu(void);

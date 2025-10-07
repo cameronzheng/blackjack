@@ -1,11 +1,5 @@
 #include "blackjack.h"
 
-Blackjack::Blackjack()
-{
-  round = 1;
-  lastMove = "";
-}
-
 void Blackjack::Menu(void)
 {
   /**
@@ -60,7 +54,21 @@ void Blackjack::Gameplay(void)
    // display the money
    // start a round
    // ask user if they want to keep playing
-  Round();
+
+  bool exit = false;
+  char userChoice;
+  round = 1;
+  lastMove = "";
+  while (!exit)
+  {
+    Round();
+
+    std::cout << "Do you want to keep playing? (y/n): ";
+    std::cin >> userChoice;
+
+    if (userChoice == 'n')
+      exit = true;
+  }
 
   // display the results of the round
 
@@ -75,9 +83,9 @@ void Blackjack::Round(void)
    // playing the game
    // ask the player to put in bets before the game starts
   // loop till the player puts an acceptable amount of money
-  bet = 0;
   do
   {
+    bet = 0;
     Scoreboard(); 
     std::cout << "Place your bet: " << std::endl;
     std::cin >> bet;
@@ -85,16 +93,12 @@ void Blackjack::Round(void)
   } while (!player.ValidBet(bet));
   
   // get the round started
-  // draw the two cards for the player and the dealer to start the round
-  StartRound();
-  // ask the player for their action
-  PlayerAction();
-  // dealer does their action
-
-  // compare the player and dealer's hand
-  CompareHands();
-  // give out money based on results
-  
+  StartRound();       // draw the two cards for the player and the dealer to start the round
+  PlayerAction();     // ask the player for their action
+  DealerAction();     // dealer does their action
+  CompareHands();     // compare the player and dealer's hand
+  CalculateRound();   // give out money based on results
+  round++;
 }
 
 void Blackjack::Scoreboard(void)
@@ -116,8 +120,8 @@ void Blackjack::Scoreboard(void)
   dealerHandStr = CardsToStringVec(dealerHand);
   system("clear");
   std::cout << "---------- Round " << round << " ----------" << std::endl;
-  std::cout << "Money Remaining: $" << player.MoneyRemaining() << std::endl;
-  std::cout << "Current Bet: " << bet << std::endl;
+  std::cout << "Money Remaining: $" << player.MoneyRemaining() - bet << std::endl;
+  std::cout << "Current Bet: $" << bet << std::endl;
   std::cout << "-----------------------------" << std::endl;
   std::cout << "Dealer's Hand: ";
   for (int i = 0; i < dealerHandStr.size(); i++)
@@ -370,14 +374,28 @@ void Blackjack::CompareHands(void)
 }
 
 // TODO: Function to calculate the total winnings for the player
+void Blackjack::CalculateRound(void)
+{
+  /**
+   * @brief Calcualtes the amount of money the player wins or loses based on round
+   * 
+   * @param userBet The total amount of money the user bet during this round of play
+   * 
+   * @return integer value of the amount of money the player has won
+   */
 
-/**
- * @brief Calcualtes the amount of money the player wins after winning the round
- * 
- * @param userBet The total amount of money the user bet during this round of play
- * 
- * @return integer value of the amount of money the player has won
- */
+  if (roundResult == "Win")
+  {
+    // add to the player's total
+    player.AddTotal(bet);
+  }
+  else if (roundResult == "Lose")
+  {
+    // subtract the bet from the total
+    player.SubTotal(bet);
+  }
+  // else is a tie, which we don't change anything
+}
 
 // ? Extra rules later
 
@@ -396,61 +414,3 @@ int main()
 
   return 0;
 }
-
-
-// void Blackjack(void)
-// {
-//   int deck[DECK_SUITS][DECK_NUMS] = {0};
-
-
-//   int money = 1000;
-//   bool running = true;
-
-//   // game logic sequence
-//   // 1. player will be welcomed
-//   // 2. dealer will pass out cards 
-//   // 3. present the actions the player can do with the cards (hit/stand)
-//   // 4. determine the result from the dealer
-//   // 5. repeat until money is gone
-
-//   DeckInit(deck);
-//   PrintDeck(deck);
-  
-//   WelcomeScreen(running);
-
-//   for (int i = 0; i < 5; i++)
-//   {
-//     DrawCard();
-//   }
-
-//   // game pseudo code
-
-//   /*
-//     1. If the player enters a certain number on the menu screen, we will enter the gameplay screen
-//     2. Displays the amount of money the player has to bet, cards in the deck
-//     3. Pass out cards to the dealer and the player. Player first then dealer. Two cards each
-//     4. Player should be asked to hit or stand. Hit adds a card to their hand. Stand makes them not draw a card
-//     5. Calculate the players hand to make sure it is <= 21. If hand > 21, this is a bust and the dealer automatically wins
-//     6. If the player is still in the game, the dealer will start to draw cards as well. if their total reaches >= 17, they will stop hitting. 
-//     7. Compare their hand to the players hand and determine the result.
-//     8. If the player wins, give them 1.5x their bet. Player loses, they will lose their bet.
-
-//   */
-
-//   // while loop
-//     // ask the user for their menu option
-//       // 1. Rules
-//       // 2. Play the game
-//       // 3. exit the program
-//     // switch statement
-//       // 1. run the rules function
-//       // 2. run the game function
-//       // 3. exit the program
-//       // default: display that is not an option
-      
-      
-//     // once an option is picked, we need to clear the screen
-
-// }
-
-
