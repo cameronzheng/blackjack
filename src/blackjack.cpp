@@ -63,6 +63,9 @@ void Blackjack::Gameplay(void)
   {
     Round();
 
+    // sleep for 5 seconds
+    // std::this_thread::sleep_for(std::chrono::seconds(5));
+
     std::cout << "Do you want to keep playing? (y/n): ";
     std::cin >> userChoice;
 

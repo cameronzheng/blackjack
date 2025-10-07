@@ -3,6 +3,8 @@
 #include "player.h"
 #include "deck.h"
 #include <cstdlib>
+#include <chrono>
+#include <thread>
 
 class Blackjack
 {
