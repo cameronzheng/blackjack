@@ -12,10 +12,10 @@ class Player
   
   public:
     Player(); // constructor
-
-    int currentBet;
     void AddCard(const int &card);
     std::vector<int> ShowCards(void);
     void ResetHand(void);
     int MoneyRemaining(void);
+
+    bool ValidBet(int &bet);
 };

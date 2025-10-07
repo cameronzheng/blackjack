@@ -46,3 +46,15 @@ int Player::MoneyRemaining(void)
    */
   return moneyTotal;
 }
+
+bool Player::ValidBet(int &bet)
+{
+  /**
+   * @brief determines if the bet is valid
+   * 
+   * @param bet total bet the player placed
+   * 
+   * @return boolean value whether the bet is valid or not
+   */
+  return (bet <= moneyTotal) ? true : false;
+}

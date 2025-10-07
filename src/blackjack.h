@@ -2,13 +2,7 @@
 
 #include "player.h"
 #include "deck.h"
-
-// void Blackjack(void);
-// // void WelcomeScreen(bool& running);
-// void Menu(void);
-
-// void DisplayMoney(void);
-
+#include <cstdlib>
 
 class Blackjack
 {
@@ -16,26 +10,40 @@ class Blackjack
     Deck deck;
     Player player;
     Player dealer;
+
+    std::vector<int> playerHand;
+    std::vector<int> dealerHand;
+
+    std::vector<std::string> playerHandStr;
+    std::vector<std::string> dealerHandStr;
+
+    std::string lastMove;
+
+    int round;
+    int bet;
   
   public:
-    // Blackjack();  // constructor
-    
+    Blackjack();  // constructor
+
     void Gameplay(void);
+
+    void Menu(void);
+
+    void Round(void);
+
+    void Scoreboard(void);
 
     // starts the blackjack round
     void StartRound(void);
-
+    
     // resets the blackjack round (clearing the cards)
     void ResetRound(void);
 
     // display the current hand
-    void DisplayHand(std::vector<int> hand);
+    std::vector<std::string> CardsToStringVec(std::vector<int> hand);
 
     // Calculate the current hand total
     int CalculateHand(std::vector<int> hand);
-
-    // display amount of money the player has
-    void DisplayMoney(void);
 
     // valididate the player's hand
     bool ValidHand(std::vector<int> hand);
@@ -50,5 +58,6 @@ class Blackjack
     std::string CompareHands(void);
 
     // todo: calculate the winnings of the round
+
 
 };

@@ -1,5 +1,131 @@
 #include "blackjack.h"
 
+Blackjack::Blackjack()
+{
+  round = 1;
+  lastMove = "";
+}
+
+void Blackjack::Menu(void)
+{
+  /**
+   * @brief menu to display to the user the options
+   */
+  bool exit = false;
+  int userInput;
+
+  while(!exit)
+  {
+    system("clear");
+    // menu to display various options
+     // 1. how to play
+     // 2. gameplay
+     // 3. exit the game
+    std::cout << "Select an option from the menu below: ";
+    std::cout << "1. How to play Blackjack" << std::endl;
+    std::cout << "2. Play Blackjack" << std::endl;
+    std::cout << "3. Exit program" << std::endl;
+
+    std::cin >> userInput;
+
+    switch(userInput)
+    {
+      case 1:
+        std::cout << "This is how you play blackjack" << std::endl;
+        break;
+
+      case 2: 
+        std::cout << "Let's play blackjack" << std::endl;
+        break;
+
+      case 3: 
+        std::cout << "Exiting game :(" << std::endl;
+        exit = true;
+        break;
+
+      default:
+        std::cout << "That is not an option. Please select a valid opiton" << std::endl;
+        break;
+    }
+  }
+}
+
+void Blackjack::Gameplay(void)
+{
+  /**
+   * @brief runs the game of blackjack
+   */
+
+  // check if the player has enough money
+   // display the money
+   // start a round
+   // ask user if they want to keep playing
+}
+
+void Blackjack::Round(void)
+{
+  /**
+   * @brief starts the round for blackjack
+   */
+
+   // playing the game
+   // ask the player to put in bets before the game starts
+  // loop till the player puts an acceptable amount of money
+  do
+  {
+    Scoreboard(); 
+    std::cout << "Place your bet: " << std::endl;
+    std::cin >> bet;
+
+  } while (!player.ValidBet(bet));
+  
+  // get the round started
+  // draw the two cards for the player and the dealer to start the round
+  StartRound();
+  // ask the player for their action
+
+  // dealer does their action
+  // compare the player and dealer's hand
+  // give out money based on results
+}
+
+void Blackjack::Scoreboard(void)
+{
+  /**
+   * @brief Displays the following:
+   * ---------- Round 1 ----------
+   * Money Remaining: $1000 
+   * Current Bet:
+   * -----------------------------
+   * Dealer's Hand: 
+   * Player's Hand:
+   * -----------------------------
+   * Last Move: 
+   * -----------------------------
+   * ~Displays current round action~
+   */
+  playerHandStr = CardsToStringVec(playerHand);
+  dealerHandStr = CardsToStringVec(dealerHand);
+  system("clear");
+  std::cout << "---------- Round " << round << " ----------";
+  std::cout << "Money Remaining: $" << player.MoneyRemaining() << std::endl;
+  std::cout << "Current Bet: " << bet << std::endl;
+  std::cout << "-----------------------------" << std::endl;
+  std::cout << "Dealer's Hand: ";
+  for (int i = 0; i < dealerHandStr.size(); i++)
+    std::cout << dealerHandStr[i] << " ";
+  std::cout << std::endl;
+
+  std::cout << "Player's Hand: ";
+  for (int i = 0; i < playerHandStr.size(); i++)
+    std::cout << playerHandStr[i] << " ";
+  std::cout << std::endl;
+  std::cout << "-----------------------------" << std::endl;
+  std::cout << "Last Move: " << lastMove << std::endl;
+  std::cout << "-----------------------------" << std::endl;
+
+}
+
 void Blackjack::StartRound(void)
 {
   /**
@@ -14,15 +140,6 @@ void Blackjack::StartRound(void)
     player.AddCard(deck.DrawCard());
     dealer.AddCard(deck.DrawCard());
   } 
-  std::vector<int> dealerHand = dealer.ShowCards();
-  std::cout << "Dealer's Hand: ";
-  // just showing one card
-  std::cout << deck.Card(dealerHand[0]) << std::endl;
-  std::vector<int> playerHand = player.ShowCards();
-  std::cout << "Player's Hand: ";
-  DisplayHand(playerHand);
-  // std::cout << CalculateHand(playerHand) << std::endl;
-  // std::cout << ValidHand(playerHand) << std::endl;
 }
 
 void Blackjack::ResetRound(void)
@@ -35,18 +152,24 @@ void Blackjack::ResetRound(void)
   dealer.ResetHand();
 }
 
-void Blackjack::DisplayHand(std::vector<int> hand)
+std::vector<std::string> Blackjack::CardsToStringVec(std::vector<int> hand)
 {
   /**
    * @brief shows the elements in the vector passed into it
    * 
    * @param hand Not pass by reference since we are accepting a new vector
+   * 
+   * @return vecotr of strings that contains the cards in the hand
    */
+  std::vector<std::string> cards;
+
   for (int i = 0; i < hand.size(); i++)
   {
-    std::cout << deck.Card(hand[i]) << " ";
+    cards.push_back(deck.Card(hand[i]));
+    // std::cout << deck.Card(hand[i]) << " ";
   } 
-  std::cout << std::endl;
+  // std::cout << std::endl;
+  return cards;
 }
 
 int Blackjack::CalculateHand(std::vector<int> hand)
@@ -90,14 +213,6 @@ int Blackjack::CalculateHand(std::vector<int> hand)
   return sum;
 }
 
-void Blackjack::DisplayMoney(void)
-{
-  /**
-   * @brief displays the current amount of money the player has
-   */
-  std::cout << "$" << player.MoneyRemaining() << std::endl;
-}
-
 // TODO: Function to determine if the card hand is valid
 bool Blackjack::ValidHand(std::vector<int> hand)
 {
@@ -126,15 +241,12 @@ void Blackjack::PlayerAction(void)
 
   int userSelection = 0;
   bool exit = false;
-  std::vector<int> playerHand = player.ShowCards();
+  playerHand = player.ShowCards();
 
   while(!exit)
   {
-    playerHand = player.ShowCards();
-    std::cout << "Player's Hand: ";
-    DisplayHand(playerHand);
-    std::cout << "Total: " << CalculateHand(playerHand) << std::endl;
-
+    // std::cout << "Total: " << CalculateHand(playerHand) << std::endl;
+    Scoreboard();
     std::cout << "Select one of the options below:" << std::endl;
     std::cout << "1. Hit" << std::endl;
     std::cout << "2. Stand" << std::endl;
@@ -187,10 +299,10 @@ void Blackjack::DealerAction(void)
   
   // keep drawing cards until it is over 17
   // std::cout << "Dealer's turn" << std::endl;
-  std::vector<int> dealerHand = dealer.ShowCards();
+  dealerHand = dealer.ShowCards();
   // DisplayHand(dealerHand);
   // std::cout << CalculateHand(dealerHand) << std::endl;
-  DisplayHand(dealerHand);
+  // DisplayHand(dealerHand);
   std::cout << "Total: " << CalculateHand(dealerHand) << std::endl;
 
   
@@ -202,7 +314,7 @@ void Blackjack::DealerAction(void)
     dealer.AddCard(deck.DrawCard());
     dealerHand = dealer.ShowCards();
     
-    DisplayHand(dealerHand);
+    // DisplayHand(dealerHand);
     std::cout << "Total: " << CalculateHand(dealerHand) << std::endl;
   }
 }
@@ -218,13 +330,13 @@ std::string Blackjack::CompareHands(void)
    * 
    * @return boolean of whether the player has won, lost, or tied the dealer
    */
-  std::vector<int> playerHand = player.ShowCards();
+  playerHand = player.ShowCards();
   
   // check if the player busted 
   if (!ValidHand(playerHand))
     return "lose";
   
-  std::vector<int> dealerHand = dealer.ShowCards();
+  dealerHand = dealer.ShowCards();
 
   // check if dealer busted
   if (!ValidHand(dealerHand))
@@ -267,11 +379,12 @@ int main()
 {
   
   Blackjack blackjack;
-  blackjack.StartRound();
-  blackjack.PlayerAction();
-  blackjack.DealerAction();
+  blackjack.Gameplay();
+  // blackjack.StartRound();
+  // blackjack.PlayerAction();
+  // blackjack.DealerAction();
 
-  std::cout << blackjack.CompareHands() << std::endl;
+  // std::cout << blackjack.CompareHands() << std::endl;
   // blackjack.DisplayMoney();
   // blackjack.DealerAction();
 
