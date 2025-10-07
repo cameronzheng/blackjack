@@ -21,7 +21,7 @@ void Blackjack::Menu(void)
      // 1. how to play
      // 2. gameplay
      // 3. exit the game
-    std::cout << "Select an option from the menu below: ";
+    std::cout << "Select an option from the menu below: " << std::endl;
     std::cout << "1. How to play Blackjack" << std::endl;
     std::cout << "2. Play Blackjack" << std::endl;
     std::cout << "3. Exit program" << std::endl;
@@ -35,7 +35,7 @@ void Blackjack::Menu(void)
         break;
 
       case 2: 
-        std::cout << "Let's play blackjack" << std::endl;
+        Gameplay();
         break;
 
       case 3: 
@@ -60,6 +60,10 @@ void Blackjack::Gameplay(void)
    // display the money
    // start a round
    // ask user if they want to keep playing
+  Round();
+
+  // display the results of the round
+
 }
 
 void Blackjack::Round(void)
@@ -71,6 +75,7 @@ void Blackjack::Round(void)
    // playing the game
    // ask the player to put in bets before the game starts
   // loop till the player puts an acceptable amount of money
+  bet = 0;
   do
   {
     Scoreboard(); 
@@ -83,10 +88,13 @@ void Blackjack::Round(void)
   // draw the two cards for the player and the dealer to start the round
   StartRound();
   // ask the player for their action
-
+  PlayerAction();
   // dealer does their action
+
   // compare the player and dealer's hand
+  CompareHands();
   // give out money based on results
+  
 }
 
 void Blackjack::Scoreboard(void)
@@ -107,7 +115,7 @@ void Blackjack::Scoreboard(void)
   playerHandStr = CardsToStringVec(playerHand);
   dealerHandStr = CardsToStringVec(dealerHand);
   system("clear");
-  std::cout << "---------- Round " << round << " ----------";
+  std::cout << "---------- Round " << round << " ----------" << std::endl;
   std::cout << "Money Remaining: $" << player.MoneyRemaining() << std::endl;
   std::cout << "Current Bet: " << bet << std::endl;
   std::cout << "-----------------------------" << std::endl;
@@ -119,11 +127,13 @@ void Blackjack::Scoreboard(void)
   std::cout << "Player's Hand: ";
   for (int i = 0; i < playerHandStr.size(); i++)
     std::cout << playerHandStr[i] << " ";
+  if (bust)
+    std::cout << "BUST";
   std::cout << std::endl;
   std::cout << "-----------------------------" << std::endl;
+  std::cout << "Hand Total: " << CalculateHand(playerHand) << std::endl;
   std::cout << "Last Move: " << lastMove << std::endl;
   std::cout << "-----------------------------" << std::endl;
-
 }
 
 void Blackjack::StartRound(void)
@@ -134,6 +144,7 @@ void Blackjack::StartRound(void)
    * @return None
    */
 
+  bust = false;
   // player and dealer receive two cards at the start of the round
   for (int i = 0; i < 2; i++)
   {
@@ -150,6 +161,7 @@ void Blackjack::ResetRound(void)
 
   player.ResetHand();
   dealer.ResetHand();
+
 }
 
 std::vector<std::string> Blackjack::CardsToStringVec(std::vector<int> hand)
@@ -242,47 +254,41 @@ void Blackjack::PlayerAction(void)
   int userSelection = 0;
   bool exit = false;
   playerHand = player.ShowCards();
+  bool error = false;
 
   while(!exit)
   {
-    // std::cout << "Total: " << CalculateHand(playerHand) << std::endl;
     Scoreboard();
+    if (error)
+      std::cout << "ERROR: Not a valid selection, please choose again" << std::endl;
     std::cout << "Select one of the options below:" << std::endl;
     std::cout << "1. Hit" << std::endl;
     std::cout << "2. Stand" << std::endl;
-    std::cout << "3. Exit Game" << std::endl;
 
     std::cin >> userSelection;
     switch(userSelection)
     {
       case 1:
-        std::cout << "HIT!" << std::endl;
+        lastMove = "Hit";
         player.AddCard(deck.DrawCard());
         playerHand = player.ShowCards();
         break;
       case 2: 
-        std::cout << "STAND!" << std::endl;
+        lastMove = "Stand";
         exit = true;
         break;
-      case 3:
-        std::cout << "Exiting game :(" << std::endl;
-        std::cout << "Just kidding ! you have to keep playing boi" << std::endl;
-        break;
       default:
-        std::cout << "ERROR: Not a valid selection, please choose again" << std::endl;
+        error = true;
         break;
     }
 
     // calculate the player's hand to see if they can still do an action
     if (CalculateHand(playerHand) > 21)
     {
-      std::cout << "BUST! :(" << std::endl;
+      bust = true;
       exit = true;
     }
   }
-
-
-
 }
 
 
@@ -303,24 +309,24 @@ void Blackjack::DealerAction(void)
   // DisplayHand(dealerHand);
   // std::cout << CalculateHand(dealerHand) << std::endl;
   // DisplayHand(dealerHand);
-  std::cout << "Total: " << CalculateHand(dealerHand) << std::endl;
+  // std::cout << "Total: " << CalculateHand(dealerHand) << std::endl;
 
   
   while (CalculateHand(dealerHand) < 17)
   {
     // draw a card
-    std::cout << "HIT!" << std::endl;
+    // std::cout << "HIT!" << std::endl;
 
     dealer.AddCard(deck.DrawCard());
     dealerHand = dealer.ShowCards();
     
     // DisplayHand(dealerHand);
-    std::cout << "Total: " << CalculateHand(dealerHand) << std::endl;
+    // std::cout << "Total: " << CalculateHand(dealerHand) << std::endl;
   }
 }
 
 // TODO: Function to compare the player and dealer's hand
-std::string Blackjack::CompareHands(void)
+void Blackjack::CompareHands(void)
 {
   /**
    * @brief Compares the player's and dealer's hand to determine who had the greater total
@@ -334,13 +340,13 @@ std::string Blackjack::CompareHands(void)
   
   // check if the player busted 
   if (!ValidHand(playerHand))
-    return "lose";
+    roundResult = "Lose";
   
   dealerHand = dealer.ShowCards();
 
   // check if dealer busted
   if (!ValidHand(dealerHand))
-    return "win";
+    roundResult = "Win";
 
   // get the sums of the cards
   int playerSum = CalculateHand(playerHand);
@@ -349,17 +355,17 @@ std::string Blackjack::CompareHands(void)
   // player wins
   if (playerSum > dealerSum)
   {
-    return "win";
+    roundResult = "Win";
   }
   // player ties 
   else if (playerSum == dealerSum)
   {
-    return "tied";
+    roundResult = "Tie";
   }
   // player loses
   else
   {
-    return "lose";
+    roundResult = "Lose";
   }
 }
 
@@ -379,7 +385,7 @@ int main()
 {
   
   Blackjack blackjack;
-  blackjack.Gameplay();
+  blackjack.Menu();
   // blackjack.StartRound();
   // blackjack.PlayerAction();
   // blackjack.DealerAction();

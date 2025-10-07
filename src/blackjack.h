@@ -21,6 +21,8 @@ class Blackjack
 
     int round;
     int bet;
+    bool bust;
+    std::string roundResult;
   
   public:
     Blackjack();  // constructor
@@ -55,9 +57,9 @@ class Blackjack
     void DealerAction(void);
 
     // todo: compare the player's and dealer's hand and return if the player won
-    std::string CompareHands(void);
+    void CompareHands(void);
 
     // todo: calculate the winnings of the round
-
+    void CalculateRound(void);
 
 };

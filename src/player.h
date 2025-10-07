@@ -16,6 +16,6 @@ class Player
     std::vector<int> ShowCards(void);
     void ResetHand(void);
     int MoneyRemaining(void);
-
     bool ValidBet(int &bet);
+    // void AddTotal(void);
 };
